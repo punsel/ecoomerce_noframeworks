@@ -128,6 +128,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
             
+        case 'get_cart_count':
+            $stmt = $conn->prepare("SELECT SUM(quantity) as count FROM cart_items WHERE user_id = ?");
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $cart_count = $result->fetch_assoc()['count'] ?? 0;
+            echo json_encode(['cart_count' => $cart_count]);
+            break;
+            
         default:
             echo json_encode(['error' => 'Invalid action']);
     }

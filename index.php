@@ -365,4 +365,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+function getCartCount() {
+    fetch('ajax/cart.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'action=get_cart_count'
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('cart-count').innerText = data.cart_count;
+    })
+    .catch(error => console.error('Error:', error));
+}
+getCartCount();
 </script> 
